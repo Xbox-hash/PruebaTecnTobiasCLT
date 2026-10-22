@@ -72,6 +72,12 @@ public static class UserEndpoints
                     error = $"Usuario con id {id} no encontrado"
                 });
         });
+
+        group.MapPost("/bulk", async (BulkCreateUsersCommand command, ICommandHandler<BulkCreateUsersCommand, BulkResult> handler, CancellationToken ct) =>
+        {
+            var result = await handler.HandleAsync(command, ct);
+            return Results.Ok(result);
+        }).AddEndpointFilter<ValidationFilter<BulkCreateUsersCommand>>();
         return group;
     }
 }

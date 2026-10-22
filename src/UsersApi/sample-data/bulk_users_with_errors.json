@@ -1,0 +1,8 @@
+{
+  "users": [
+    { "name": "Sofia Martinez", "email": "sofia.martinez@test.com" },
+    { "name": "", "email": "nombre.invalido@test.com" },
+    { "name": "Pedro Perez", "email": "pedro_sin_formato_valido" },
+    { "name": "Ana Gómez Duplicada", "email": "ana.gomez@test.com" }
+  ]
+}

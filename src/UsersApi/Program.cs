@@ -53,6 +53,7 @@ builder.Services.AddScoped<ICommandHandler<UpdateUserCommand, UpdateUserResult>,
 builder.Services.AddScoped<ICommandHandler<DeleteUserCommand, bool>, DeleteUserHandler>();
 builder.Services.AddScoped<IQueryHandler<GetUsersQuery, List<UserResponse>>, GetUsersHandler>();
 builder.Services.AddScoped<IQueryHandler<GetUserByIdQuery, UserResponse?>, GetUserByIdHandler>();
+builder.Services.AddScoped<ICommandHandler<BulkCreateUsersCommand, BulkResult>, BulkCreateUsersHandler>();
 
 builder.Services.AddScoped<ICommandHandler<CreateAddressCommand, AddressResponse?>, CreateAddressHandler>();
 builder.Services.AddScoped<ICommandHandler<UpdateAddressCommand, AddressResponse?>, UpdateAddressHandler>();
