@@ -16,4 +16,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Addresses\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Application\Addresses\Commands\CreateAddressCommands.cs" />
+  </ItemGroup>
+
 </Project>

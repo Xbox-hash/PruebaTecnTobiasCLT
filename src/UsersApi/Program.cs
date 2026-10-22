@@ -1,4 +1,4 @@
-using FluentValidation;
+Ôªøusing FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using UsersApi.Api;
@@ -7,6 +7,7 @@ using UsersApi.Application.Users.Commands;
 using UsersApi.Application.Users.Queries;
 using UsersApi.Infrastructure.Persistence;
 using UsersApi.Infrastructure.Security;
+using UsersApi.Application.Addresses.Commands;
 using static UsersApi.Application.Users.Commands.CreateUserCommands;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,11 +27,11 @@ builder.Services.AddSwaggerGen(c =>
 "v1"
     });
 
-    // DefiniciÛn del esquema de seguridad X-API-KEY
+    // Definici√≥n del esquema de seguridad X-API-KEY
     var securityScheme = new OpenApiSecurityScheme
     {
         Name = "X-API-KEY",
-        Description = "Ingres· tu API Key para autenticar las peticiones",
+        Description = "Ingres√° tu API Key para autenticar las peticiones",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "ApiKeyScheme",
@@ -47,11 +48,13 @@ builder.Services.AddSwaggerGen(c =>
             { securityScheme, Array.Empty<string>() }
         });
 });
-// Escanea todo el proyecto y registra autom·ticamente todos los validadores de FluentValidation
+// Escanea todo el proyecto y registra autom√°ticamente todos los validadores de FluentValidation
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 // Registramos el handler de Crear Usuario
 builder.Services.AddScoped<ICommandHandler<CreateUserCommand, UserResponse?>,CreateUserHandler>();
+
+builder.Services.AddScoped<ICommandHandler<CreateAddressCommand, AddressResponse?>,CreateAddressHandler>();
 
 //handler listar usuario solo lectura
 builder.Services.AddScoped<IQueryHandler<GetUsersQuery, List<UserResponse>>,GetUsersHandler>();
@@ -85,5 +88,11 @@ app.UseSwaggerUI(c =>
 app.UseMiddleware<ApiKeyMiddleware>();
 
 app.MapGet("/", () => "API de Usuarios, Direcciones y Divisas activa");
+
+//donde estas los endpoints de users
 app.MapUserEndpoints();
+
+//donde estas los endpoints de users
+app.MapAddressEndpoints();
+
 app.Run();
