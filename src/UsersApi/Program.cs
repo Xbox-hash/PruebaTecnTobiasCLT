@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using UsersApi.Api;
 using UsersApi.Application.Abstractions;
+using UsersApi.Application.Users.Queries;
 using UsersApi.Infrastructure.Persistence;
 using UsersApi.Infrastructure.Security;
 using static UsersApi.Application.Users.Commands.CreateUserCommands;
@@ -49,8 +50,13 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 // Registramos el handler de Crear Usuario
-builder.Services.AddScoped<ICommandHandler<CreateUserCommand, UserResponse?>,
-CreateUserHandler>();
+builder.Services.AddScoped<ICommandHandler<CreateUserCommand, UserResponse?>,CreateUserHandler>();
+
+//handler listar usuario solo lectura
+builder.Services.AddScoped<IQueryHandler<GetUsersQuery, List<UserResponse>>,GetUsersHandler>();
+
+//handler usuario por ID solo lectura
+builder.Services.AddScoped<IQueryHandler<GetUserByIdQuery, UserResponse?>,GetUserByIdHandler>();
 var app = builder.Build();
 
 // aplicar migration automatico al arrancar
