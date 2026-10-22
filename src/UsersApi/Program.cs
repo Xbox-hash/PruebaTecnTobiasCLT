@@ -3,12 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using UsersApi.Api;
 using UsersApi.Application.Abstractions;
+using UsersApi.Application.Addresses.Commands;
+using UsersApi.Application.Addresses.Queries;
 using UsersApi.Application.Users.Commands;
 using UsersApi.Application.Users.Queries;
 using UsersApi.Infrastructure.Persistence;
 using UsersApi.Infrastructure.Security;
-using UsersApi.Application.Addresses.Commands;
 using static UsersApi.Application.Users.Commands.CreateUserCommands;
+using static UsersApi.Application.Addresses.Commands.CreateAddressCommand;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +60,9 @@ builder.Services.AddScoped<ICommandHandler<CreateAddressCommand, AddressResponse
 
 //handler listar usuario solo lectura
 builder.Services.AddScoped<IQueryHandler<GetUsersQuery, List<UserResponse>>,GetUsersHandler>();
+
+//handler par alistar las direcciones 
+builder.Services.AddScoped<IQueryHandler<GetUserAddressesQuery, List<AddressResponse>>, GetUserAddressesHandler>();
 
 //handler usuario por ID solo lectura
 builder.Services.AddScoped<IQueryHandler<GetUserByIdQuery, UserResponse?>,GetUserByIdHandler>();

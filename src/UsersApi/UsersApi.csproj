@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Addresses\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Application\Addresses\Commands\CreateAddressCommands.cs" />
   </ItemGroup>
 
