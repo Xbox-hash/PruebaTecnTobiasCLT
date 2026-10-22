@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using UsersApi.Api;
 using UsersApi.Application.Abstractions;
+using UsersApi.Application.Users.Commands;
 using UsersApi.Application.Users.Queries;
 using UsersApi.Infrastructure.Persistence;
 using UsersApi.Infrastructure.Security;
@@ -57,6 +58,13 @@ builder.Services.AddScoped<IQueryHandler<GetUsersQuery, List<UserResponse>>,GetU
 
 //handler usuario por ID solo lectura
 builder.Services.AddScoped<IQueryHandler<GetUserByIdQuery, UserResponse?>,GetUserByIdHandler>();
+
+//handler actualiza user
+builder.Services.AddScoped<ICommandHandler<UpdateUserCommand, UpdateUserResult>,UpdateUserHandler>();
+
+//handler eliminar user
+builder.Services.AddScoped<ICommandHandler<DeleteUserCommand, bool>,DeleteUserHandler>();
+
 var app = builder.Build();
 
 // aplicar migration automatico al arrancar
