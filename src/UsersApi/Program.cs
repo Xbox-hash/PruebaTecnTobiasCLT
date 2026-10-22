@@ -1,7 +1,11 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using UsersApi.Api;
+using UsersApi.Application.Abstractions;
 using UsersApi.Infrastructure.Persistence;
 using UsersApi.Infrastructure.Security;
+using static UsersApi.Application.Users.Commands.CreateUserCommands;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +45,12 @@ builder.Services.AddSwaggerGen(c =>
             { securityScheme, Array.Empty<string>() }
         });
 });
+// Escanea todo el proyecto y registra automáticamente todos los validadores de FluentValidation
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+// Registramos el handler de Crear Usuario
+builder.Services.AddScoped<ICommandHandler<CreateUserCommand, UserResponse?>,
+CreateUserHandler>();
 var app = builder.Build();
 
 // aplicar migration automatico al arrancar
@@ -62,5 +71,5 @@ app.UseSwaggerUI(c =>
 app.UseMiddleware<ApiKeyMiddleware>();
 
 app.MapGet("/", () => "API de Usuarios, Direcciones y Divisas activa");
-
+app.MapUserEndpoints();
 app.Run();
