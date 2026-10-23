@@ -5,6 +5,9 @@ using UsersApi.Api;
 using UsersApi.Application.Abstractions;
 using UsersApi.Application.Addresses.Commands;
 using UsersApi.Application.Addresses.Queries;
+using UsersApi.Application.Currencies.Commands;
+using UsersApi.Application.Currencies.Queries;
+using UsersApi.Application.CurrencyConversion;
 using UsersApi.Application.Users.Commands;
 using static UsersApi.Application.Users.Commands.CreateUserCommands;
 using UsersApi.Application.Users.Queries;
@@ -60,6 +63,10 @@ builder.Services.AddScoped<ICommandHandler<UpdateAddressCommand, AddressResponse
 builder.Services.AddScoped<ICommandHandler<DeleteAddressCommand, bool>, DeleteAddressHandler>();
 builder.Services.AddScoped<IQueryHandler<GetUserAddressesQuery, List<AddressResponse>?>, GetUserAddressesHandler>();
 
+builder.Services.AddScoped<ICommandHandler<CreateCurrencyRequest, CurrencyResponse?>, CreateCurrencyHandler>();
+builder.Services.AddScoped<IQueryHandler<GetCurrenciesQuery, List<CurrencyResponse>>, GetCurrenciesHandler>();
+builder.Services.AddScoped<ICommandHandler<ConvertCurrencyRequest, ConvertCurrencyResponse?>, ConvertCurrencyHandler>();
+
 var app = builder.Build();
 
 var factory = app.Services.GetRequiredService<IDbContextFactory<AppDbContext>>();
@@ -80,5 +87,6 @@ app.MapGet("/", () => "API de Usuarios, Direcciones y Divisas activa");
 
 app.MapUserEndpoints();
 app.MapAddressEndpoints();
+app.MapCurrencyEndpoints();
 
 app.Run();
